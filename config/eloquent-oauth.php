@@ -7,9 +7,9 @@ return [
     'table' => 'oauth_identities',
     'providers' => [
         'facebook' => [
-            'client_id' => '12345678',
-            'client_secret' => 'y0ur53cr374ppk3y',
-            'redirect_uri' => 'https://example.com/your/facebook/redirect',
+            'client_id' => '273827493540911',
+            'client_secret' => '94f090c999dec9b3c2ed13541e737d4e',
+            'redirect_uri' => 'http://127.0.0.1:8000//facebook/redirect',
             'scope' => [],
         ],
         'google' => [
