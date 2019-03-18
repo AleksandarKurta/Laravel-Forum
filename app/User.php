@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function discussions(){
         return $this->hasMany('App\Discussion');
     }
+
+    public function profile(){
+        return $this->hasOne('App\Profile');
+    }
 }
