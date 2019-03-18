@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid mt-5">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header text-center">
                             Channels List
@@ -29,7 +25,7 @@
                                                 <form action="{{ route('channels.destroy', ['channel' => $channel]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -53,8 +49,4 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
