@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use App\Channel;
 use Illuminate\Http\Request;
 
 class ChannelsController extends Controller
@@ -13,7 +15,9 @@ class ChannelsController extends Controller
      */
     public function index()
     {
-        //
+
+        $channels = Channel::all();
+        return view('admin.channels.index', compact('channels'));
     }
 
     /**
@@ -23,7 +27,7 @@ class ChannelsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.channels.create');
     }
 
     /**
@@ -32,9 +36,19 @@ class ChannelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Channel $channel)
     {
-        //
+        $attributes = request()->validate([
+            'title' => 'required'
+        ]);
+
+        $attributes['slug'] = str_slug($attributes['title']);
+
+        $channel->create($attributes);
+
+        Session::flash('success', 'Channel created successfully.');
+
+        return redirect()->route('channels.index');
     }
 
     /**
@@ -54,9 +68,9 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Channel $channel)
     {
-        //
+        return view('admin.channels.edit', compact('channel'));
     }
 
     /**
@@ -66,9 +80,19 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Channel $channel)
     {
-        //
+        $attributes = request()->validate([
+            'title' => 'required'
+        ]);
+
+        $attributes['slug'] = str_slug($attributes['title']);
+        
+        $channel->update($attributes);
+
+        Session::flash('success', 'Channel updated successfully.');
+
+        return redirect()->route('channels.index');
     }
 
     /**
@@ -77,8 +101,12 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Channel $channel)
     {
-        //
+        $channel->delete();
+
+        Session::flash('success', 'Channel deleted successfully.');
+
+        return back();
     }
 }
