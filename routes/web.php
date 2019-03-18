@@ -21,7 +21,7 @@ Route::get('/discuss', function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/forum', 'ForumsController@forum')->name('forum');
 
 Route::get('{provider}/auth', 'SocialsController@auth')->name('social.auth');
 Route::get('/{provider}/redirect', 'SocialsController@callback')->name('social.callback');
