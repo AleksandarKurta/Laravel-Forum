@@ -77,6 +77,9 @@
             <div class="row mt-5">
                 <div class="col-md-4">
                     <div class="card">
+
+                        <a href="{{ route('discussion.create') }}" class="btn btn-dark">Create Discussion</a>
+
                         <div class="card-header">
                             Channels
                         </div>

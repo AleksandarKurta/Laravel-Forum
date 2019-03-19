@@ -36,7 +36,7 @@ class ChannelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Channel $channel)
+    public function store()
     {
         $attributes = request()->validate([
             'title' => 'required'
@@ -44,7 +44,7 @@ class ChannelsController extends Controller
 
         $attributes['slug'] = str_slug($attributes['title']);
 
-        $channel->create($attributes);
+        Channel::create($attributes);
 
         Session::flash('success', 'Channel created successfully.');
 
