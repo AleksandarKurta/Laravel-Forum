@@ -18,6 +18,7 @@
 
             <div class="card-footer">
                 {{ $discussion->replies->count() }} Replies
+                <a href="{{ route('channel', ['slug' => $discussion->channel->slug]) }}" class="btn btn-secondary btn-sm float-right">{{ $discussion->channel->title }}</a>
             </div>
         </div>
     @endforeach

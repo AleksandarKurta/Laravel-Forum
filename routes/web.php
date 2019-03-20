@@ -28,12 +28,13 @@ Route::get('/{provider}/redirect', 'SocialsController@callback')->name('social.c
 
 Route::get('/channel/{slug}', 'ForumsController@channel')->name('channel');
 
+Route::get('/discussion/{slug}', 'DiscussionsController@show')->name('discussion');
+
 Route::group(['middleware' => 'auth'], function(){
     Route::resource('channels', 'ChannelsController');
 
-    Route::get('/discussion/create', 'DiscussionsController@create')->name('discussion.create');
+    Route::get('/discussion/create/new', 'DiscussionsController@create')->name('discussion.create');
     Route::post('/discussion/store', 'DiscussionsController@store')->name('discussion.store');
-    Route::get('/discussion/{slug}', 'DiscussionsController@show')->name('discussion');
     Route::post('/discussion/reply/{id}', 'DiscussionsController@reply')->name('discussion.reply');
 
     Route::get('/reply/{id}/likeOrDislike/{num}', 'RepliesController@likeOrDislike')->name('reply.likeOrDislike');

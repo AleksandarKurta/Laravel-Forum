@@ -5,6 +5,7 @@
             <div class="card-header">
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
                 <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
+                <a href="" class="btn btn-secondary btn-sm float-right">Watch</a>
             </div>
 
             <div class="card-body">
@@ -60,23 +61,29 @@
             </div>
         @endforeach
 
-        <div class="card">
-            <div class="card-header">
-                Your reply
-            </div>
+        @if(Auth::check())
+            <div class="card">
+                <div class="card-header">
+                    Your reply
+                </div>
 
-            <div class="card-body">
-                <form action="{{ route('discussion.reply', ['id' => $discussion->id]) }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="content">Content</label>
-                        <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
+                <div class="card-body">
+                    <form action="{{ route('discussion.reply', ['id' => $discussion->id]) }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="content">Content</label>
+                            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-dark">Reply</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-dark">Reply</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        @else 
+            <div class="text-center mt-5 mb-5">
+                <h3><a href="{{ route('login') }}">Sign in to leave a reply</a></h3>
+            </div>
+        @endif
 @endsection
