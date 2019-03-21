@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Auth;
 use App\Like;
+use App\Reply;
 use Illuminate\Http\Request;
 
 class RepliesController extends Controller
@@ -22,6 +23,16 @@ class RepliesController extends Controller
         }
     
         Session::flash('success', 'You liked the reply.');
+
+        return back();
+    }
+
+    public function bestAnswer(Reply $reply){
+        $reply->best_answer = 1;
+
+        $reply->save();
+
+        Session::flash('success', 'Reply has been marked as best answer.');
 
         return back();
     }

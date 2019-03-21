@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Session;
 use Auth;
+use Notification;
+use App\User;
 use App\Reply;
 use App\Discussion;
 use Illuminate\Http\Request;
@@ -65,7 +67,9 @@ class DiscussionsController extends Controller
     public function show($slug)
     {
         $discussion = Discussion::where('slug', $slug)->first();
-        return view('discussions.show', compact('discussion'));
+
+        $bestAnswer = $discussion->replies()->where('best_answer', 1)->first();
+        return view('discussions.show', compact('discussion', 'bestAnswer'));
     }
 
     /**
@@ -103,6 +107,8 @@ class DiscussionsController extends Controller
     }
 
     public function reply($id){
+        $discussion = Discussion::find($id);
+
         $attributes = request()->validate([
             'content' => 'required'
         ]);
@@ -110,7 +116,14 @@ class DiscussionsController extends Controller
         $attributes['user_id'] = Auth::id();
         $attributes['discussion_id'] = $id;
 
-        Reply::create($attributes);
+        $reply = Reply::create($attributes);
+
+        $watchers = [];
+        foreach($discussion->watchers as $watcher){
+            $watchers[] = User::find($watcher->user_id);
+        }
+
+        Notification::send($watchers, new \App\Notifications\NewReplyAdded($discussion));
 
         Session::flash('success', 'Replied successfully to discussion.');
 

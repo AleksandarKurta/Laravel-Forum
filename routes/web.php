@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/discussion/reply/{id}', 'DiscussionsController@reply')->name('discussion.reply');
 
     Route::get('/reply/{id}/likeOrDislike/{num}', 'RepliesController@likeOrDislike')->name('reply.likeOrDislike');
-    //Route::get('/reply/dislike/{id}', 'RepliesController@dislike')->name('reply.dislike');
+
+    Route::get('/discussion/watch/{id}', 'WatchersController@watch')->name('discussion.watch');
+    Route::get('/discussion/unwatch/{id}', 'WatchersController@unwatch')->name('discussion.unwatch');
+
+    Route::get('/discussion/best/answer/{reply}', 'RepliesController@bestAnswer')->name('discussion.best.answer');
 });
 

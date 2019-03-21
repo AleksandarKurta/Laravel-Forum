@@ -5,7 +5,11 @@
             <div class="card-header">
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
                 <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
-                <a href="" class="btn btn-secondary btn-sm float-right">Watch</a>
+                @if($discussion->isBeingWatchedByAuthUser())
+                    <a href="{{ route('discussion.unwatch', ['id' => $discussion->id]) }}" class="btn btn-secondary btn-sm float-right">Unwatch</a>
+                @else
+                    <a href="{{ route('discussion.watch', ['id' => $discussion->id]) }}" class="btn btn-secondary btn-sm float-right">Watch</a>
+                @endif
             </div>
 
             <div class="card-body">
@@ -14,6 +18,24 @@
                     <p>{{ $discussion->content }}</p>
                 </div>
             </div>
+
+            <hr>
+
+            @if($bestAnswer)
+                <div class="text-center p-4">
+                    <h3>Best answer</h3>
+                    <div class="card">
+                        <div class="card-header bg-success">
+                            <img src="{{ asset($bestAnswer->user->profile->avatar) }}" alt="avatar" width="80px">
+                            <span>{{ $bestAnswer->user->name }} <b>{{ $bestAnswer->created_at->diffForHumans() }}</b> </span>
+                        </div>
+
+                        <div class="card-body">
+                            <p>{{ $bestAnswer->content }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <div class="card-footer">
                 {{ $discussion->replies->count() }} Replies
@@ -25,6 +47,10 @@
                 <div class="card-header">
                     <img src="{{ asset($reply->user->profile->avatar) }}" alt="avatar" width="80px">
                     <span>{{ $reply->user->name }} <b>{{ $reply->created_at->diffForHumans() }}</b> </span>
+
+                    @if(!$bestAnswer)
+                        <a href="{{ route('discussion.best.answer', ['reply' => $reply]) }}" class="btn btn-info btn-sm float-right">Mark as best answer</a>
+                    @endif
                 </div>
     
                 <div class="card-body">
