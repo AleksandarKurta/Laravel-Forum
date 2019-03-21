@@ -34,10 +34,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('channels', 'ChannelsController');
 
     Route::get('/discussion/create/new', 'DiscussionsController@create')->name('discussion.create');
+    Route::get('/discussion/edit/{discussion}', 'DiscussionsController@edit')->name('discussion.edit');
+    Route::post('/discussion/update/{discussion}', 'DiscussionsController@update')->name('discussion.update');
     Route::post('/discussion/store', 'DiscussionsController@store')->name('discussion.store');
     Route::post('/discussion/reply/{id}', 'DiscussionsController@reply')->name('discussion.reply');
 
     Route::get('/reply/{id}/likeOrDislike/{num}', 'RepliesController@likeOrDislike')->name('reply.likeOrDislike');
+    Route::get('/reply/edit/{reply}', 'RepliesController@edit')->name('reply.edit');
+    Route::post('/reply/update/{reply}', 'RepliesController@update')->name('reply.update');
 
     Route::get('/discussion/watch/{id}', 'WatchersController@watch')->name('discussion.watch');
     Route::get('/discussion/unwatch/{id}', 'WatchersController@unwatch')->name('discussion.unwatch');

@@ -4,11 +4,24 @@
         <div class="card mb-3">
             <div class="card-header">
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
-                <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
+                <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> ({{ $discussion->user->profile->points }}) points</span>
+
+                @if($discussion->hasBestAnswer())
+                    <span class="btn btn-danger btn-sm float-right ml-1">closed</span>
+                @else 
+                    <span class="btn btn-success btn-sm float-right ml-1">open</span>
+                @endif
+                    
                 @if($discussion->isBeingWatchedByAuthUser())
                     <a href="{{ route('discussion.unwatch', ['id' => $discussion->id]) }}" class="btn btn-secondary btn-sm float-right">Unwatch</a>
                 @else
                     <a href="{{ route('discussion.watch', ['id' => $discussion->id]) }}" class="btn btn-secondary btn-sm float-right">Watch</a>
+                @endif
+
+                @if($discussion->user_id == Auth::id())
+                    @if(!$discussion->hasBestAnswer())
+                        <a href="{{ route('discussion.edit', ['discussion' => $discussion]) }}" class="btn btn-primary btn-sm float-right mr-1">Edit</a>
+                    @endif
                 @endif
             </div>
 
@@ -27,7 +40,7 @@
                     <div class="card">
                         <div class="card-header bg-success">
                             <img src="{{ asset($bestAnswer->user->profile->avatar) }}" alt="avatar" width="80px">
-                            <span>{{ $bestAnswer->user->name }} <b>{{ $bestAnswer->created_at->diffForHumans() }}</b> </span>
+                            <span>{{ $bestAnswer->user->name }} <b>{{ $bestAnswer->created_at->diffForHumans() }}</b> ({{ $bestAnswer->user->profile->points }}) points</span>
                         </div>
 
                         <div class="card-body">
@@ -46,10 +59,18 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <img src="{{ asset($reply->user->profile->avatar) }}" alt="avatar" width="80px">
-                    <span>{{ $reply->user->name }} <b>{{ $reply->created_at->diffForHumans() }}</b> </span>
+                    <span>{{ $reply->user->name }} <b>{{ $reply->created_at->diffForHumans() }}</b> ({{ $reply->user->profile->points }}) points </span>
 
                     @if(!$bestAnswer)
-                        <a href="{{ route('discussion.best.answer', ['reply' => $reply]) }}" class="btn btn-info btn-sm float-right">Mark as best answer</a>
+                        @if($discussion->user->id == Auth::id())
+                            <a href="{{ route('discussion.best.answer', ['reply' => $reply]) }}" class="btn btn-info btn-sm float-right">Mark as best answer</a>
+                        @endif
+                    @endif
+
+                    @if(!$reply->best_answer)
+                        @if($reply->user_id == Auth::id())
+                            <a href="{{ route('reply.edit', ['reply' => $reply]) }}" class="btn btn-warning btn-sm float-right">Edit  reply</a>
+                        @endif
                     @endif
                 </div>
     
@@ -88,25 +109,27 @@
         @endforeach
 
         @if(Auth::check())
-            <div class="card">
-                <div class="card-header">
-                    Your reply
-                </div>
+            @if(!$discussion->hasBestAnswer())
+                <div class="card">
+                    <div class="card-header">
+                        Your reply
+                    </div>
 
-                <div class="card-body">
-                    <form action="{{ route('discussion.reply', ['id' => $discussion->id]) }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="content">Content</label>
-                            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
-                        </div>
+                    <div class="card-body">
+                        <form action="{{ route('discussion.reply', ['id' => $discussion->id]) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="content">Content</label>
+                                <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Reply</button>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">Reply</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            @endif
         @else 
             <div class="text-center mt-5 mb-5">
                 <h3><a href="{{ route('login') }}">Sign in to leave a reply</a></h3>

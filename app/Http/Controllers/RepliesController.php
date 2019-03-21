@@ -32,8 +32,27 @@ class RepliesController extends Controller
 
         $reply->save();
 
+        $reply->user->profile->points += 100;
+        $reply->user->profile->save();
+
         Session::flash('success', 'Reply has been marked as best answer.');
 
         return back();
+    }
+
+    public function edit(Reply $reply){
+        return view('replies.edit', compact('reply'));
+    }
+
+    public function update(Reply $reply){
+        $attributes = request()->validate([
+            'content' => 'required'
+        ]);
+
+        $reply->update($attributes);
+
+        Session::flash('success', 'Your reply has been updated.');
+
+        return redirect()->route('discussion', ['slug' => $reply->discussion->slug]);
     }
 }

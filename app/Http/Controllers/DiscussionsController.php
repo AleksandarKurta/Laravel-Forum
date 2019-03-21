@@ -78,9 +78,9 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Discussion $discussion)
     {
-        //
+        return view('discussions.edit', compact('discussion'));
     }
 
     /**
@@ -90,9 +90,17 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Discussion $discussion)
     {
-        //
+        $attributes = request()->validate([
+            'content' => 'required'
+        ]);
+
+        $discussion->update($attributes);
+
+        Session::flash('success', 'Discussion updated successfully.');
+
+        return redirect()->route('discussion', ['slug' => $discussion->slug]);
     }
 
     /**
@@ -117,6 +125,9 @@ class DiscussionsController extends Controller
         $attributes['discussion_id'] = $id;
 
         $reply = Reply::create($attributes);
+
+        $reply->user->profile->points += 25;
+        $reply->user->profile->save();
 
         $watchers = [];
         foreach($discussion->watchers as $watcher){

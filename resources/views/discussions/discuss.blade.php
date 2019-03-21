@@ -14,7 +14,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" name="title" id="title" class="form-control">
+                    <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}">
                 </div>
                 <div class="form-group">
                     <label for="channel_id">Select Channel</label>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ old('content') }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-dark">Create discussion</button>

@@ -6,7 +6,20 @@
             <div class="card-header">
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
                 <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
-                <a href="{{ route('discussion', ['slug' => $discussion->slug]) }}" class="btn btn-secondary btn-sm float-right">View</a>
+
+                @if($discussion->hasBestAnswer())
+                    <span class="btn btn-danger btn-sm float-right">closed</span>
+                @else 
+                    <span class="btn btn-success btn-sm float-right">open</span>
+                @endif
+
+                @if($discussion->user_id == Auth::id())
+                    @if(!$discussion->hasBestAnswer())
+                        <a href="{{ route('discussion.edit', ['discussion' => $discussion]) }}" class="btn btn-primary btn-sm float-right mr-1">Edit</a>
+                    @endif
+                @endif
+
+                <a href="{{ route('discussion', ['slug' => $discussion->slug]) }}" class="btn btn-secondary btn-sm float-right mr-1">View</a>
             </div>
 
             <div class="card-body">

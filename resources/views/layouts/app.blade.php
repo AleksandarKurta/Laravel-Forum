@@ -19,6 +19,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 <body>
     <div id="app">
@@ -79,10 +81,25 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-md-4">
+                    <a href="{{ route('discussion.create') }}" class="col-md-12 btn btn-dark mb-5">Create Discussion</a>
+
                     <div class="card">
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="/forum?filter=me">My discussions</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="/forum?filter=solved">Closed discussions</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="/forum?filter=unsolved">Open discussions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
-                        <a href="{{ route('discussion.create') }}" class="btn btn-dark">Create Discussion</a>
-
+                    <div class="card">
                         <div class="card-header">
                             Channels
                         </div>
@@ -104,5 +121,15 @@
         </div>
 
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    @if(Session::has('success'))
+        toastr.success('{{ Session::get("success") }}')
+    @endif
+
+    @if(Session::has('info'))
+        toastr.info('{{ Session::get("info") }}')
+    @endif
+</script>
 </body>
 </html>
