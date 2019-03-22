@@ -11,7 +11,6 @@ use Illuminate\Pagination\Paginator;
 class ForumsController extends Controller
 {
     public function forum(){
-        //$discussions = Discussion::orderBy('created_at', 'desc')->paginate(3);
         switch(request()->filter){
             case "me":
                 $discussions = Discussion::where('user_id', Auth::id())->paginate(3);
@@ -25,7 +24,7 @@ class ForumsController extends Controller
                 endforeach;
 
                 $discussions = new Paginator($solved, 3);
-                $discussions->withPath('forum?filter=solved');
+                $discussions->withPath('?filter=solved');
 
                 break;
             case "unsolved":
@@ -37,7 +36,7 @@ class ForumsController extends Controller
                 endforeach;
 
                 $discussions = new Paginator($unsolved, 3);
-                $discussions->withPath('forum?filter=unsolved');
+                $discussions->withPath('?filter=unsolved');
 
                 break;
             default:

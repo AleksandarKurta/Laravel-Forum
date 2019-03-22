@@ -11,17 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ForumsController@forum')->name('forum');
 
 Route::get('/discuss', function(){
     return view('discuss');
 });
 
-Auth::routes();
-
+/*
 Route::get('/forum', 'ForumsController@forum')->name('forum');
+*/
+
+Auth::routes();
 
 Route::get('{provider}/auth', 'SocialsController@auth')->name('social.auth');
 Route::get('/{provider}/redirect', 'SocialsController@callback')->name('social.callback');

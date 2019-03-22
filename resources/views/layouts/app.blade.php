@@ -37,15 +37,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('forum') }}">Home</a>
+                        </li>
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Channels
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach($channels as $channel)
+                                    <a href="{{ route('channel', ['slug' => $channel->slug]) }}" class="dropdown-item">{{ $channel->title }}</a>
+                                @endforeach
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link float-left" href="{{ route('forum') }}">Home</a>
-                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -88,13 +98,13 @@
                         <div class="card-body">
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <a href="/forum?filter=me">My discussions</a>
+                                    <a href="?filter=me">My discussions</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/forum?filter=solved">Closed discussions</a>
+                                    <a href="?filter=solved">Closed discussions</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/forum?filter=unsolved">Open discussions</a>
+                                    <a href="?filter=unsolved">Open discussions</a>
                                 </li>
                             </ul>
                         </div>

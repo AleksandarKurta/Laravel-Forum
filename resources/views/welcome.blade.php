@@ -1,93 +1,42 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+    @foreach ($discussions as $discussion)
+        <div class="card mb-3">
+            <div class="card-header">
+                <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
+                <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+                @if($discussion->hasBestAnswer())
+                    <span class="btn btn-danger btn-sm float-right">closed</span>
+                @else 
+                    <span class="btn btn-success btn-sm float-right">open</span>
+                @endif
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-
-            <div class="content">
-                <div class="title m-b-md">
-                    <a href="{{ route('forum') }}" style="text-decoration: none; color:#636b6f;">Laravel Forum</a>
-                </div>
-
-                <div class="links">
-                    <a href="{{ route('social.auth', ['provider' => 'github']) }}">GitHub</a>
-                    <a href="{{ route('social.auth', ['provider' => 'facebook']) }}">Facebook</a>
-
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/home') }}">Home</a>
-                        @else
-                            <a href="{{ route('login') }}">Login</a>
-    
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Register</a>
-                            @endif
-                        @endauth
+                @if($discussion->user_id == Auth::id())
+                    @if(!$discussion->hasBestAnswer())
+                        <a href="{{ route('discussion.edit', ['discussion' => $discussion]) }}" class="btn btn-primary btn-sm float-right mr-1">Edit</a>
                     @endif
+                @endif
+
+                <a href="{{ route('discussion', ['slug' => $discussion->slug]) }}" class="btn btn-secondary btn-sm float-right mr-1">View</a>
+            </div>
+
+            <div class="card-body">
+                <div class="text-center">
+                    <h4>{{ $discussion->title }}</h4>
+                    <p>{{ str_limit($discussion->content, 50) }}</p>
                 </div>
             </div>
+
+            <div class="card-footer">
+                {{ $discussion->replies->count() }} Replies
+                <a href="{{ route('channel', ['slug' => $discussion->channel->slug]) }}" class="btn btn-secondary btn-sm float-right">{{ $discussion->channel->title }}</a>
+            </div>
         </div>
-    </body>
-</html>
+    @endforeach
+
+    <div class="text-center">
+        {{ $discussions->links() }}
+    </div>
+@endsection

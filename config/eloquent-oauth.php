@@ -13,9 +13,9 @@ return [
             'scope' => [],
         ],
         'google' => [
-            'client_id' => '12345678',
-            'client_secret' => 'y0ur53cr374ppk3y',
-            'redirect_uri' => 'https://example.com/your/google/redirect',
+            'client_id' => '13591071385-ondj555786e6lh7dj0cm8tgm5snec8k0.apps.googleusercontent.com',
+            'client_secret' => 'K1omwHP9SVFln2YOc8nonDUL',
+            'redirect_uri' => 'http://127.0.0.1:8000//google/redirect',
             'scope' => [],
         ],
         'github' => [
