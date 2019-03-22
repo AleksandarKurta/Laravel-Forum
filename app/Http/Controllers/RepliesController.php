@@ -13,7 +13,7 @@ class RepliesController extends Controller
     public function likeOrDislike($id, $num){
         $like = Like::where('reply_id', '=', $id)->where('user_id', '=', Auth::id())->first();
         if(!isset($like->isLiked)){
-            Like::create([
+            $like = Like::create([
                 'reply_id' => $id,
                 'isLiked' => $num,
                 'user_id' => Auth::id()
@@ -22,7 +22,11 @@ class RepliesController extends Controller
             $like->update(['isLiked' => $num]);
         }
     
-        Session::flash('success', 'You liked the reply.');
+        if($like->isLiked == 1){
+            Session::flash('success', 'You liked the reply.');
+        }else{
+            Session::flash('info', 'You disliked the reply.'); 
+        }
 
         return back();
     }

@@ -28,7 +28,7 @@
             <div class="card-body">
                 <div class="text-center">
                     <h4>{{ $discussion->title }}</h4>
-                    <p>{{ $discussion->content }}</p>
+                    {!! Markdown::convertToHtml($discussion->content) !!}
                 </div>
             </div>
 
@@ -76,7 +76,8 @@
     
                 <div class="card-body">
                     <div class="text-center">
-                        <p>{{ $reply->content }}</p>
+                        {!! \Michelf\Markdown::defaultTransform($reply->content) !!}
+                    
                     </div>
                 </div>
     

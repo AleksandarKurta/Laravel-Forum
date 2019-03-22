@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
