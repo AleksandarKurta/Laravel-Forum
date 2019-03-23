@@ -4,6 +4,7 @@
     @foreach ($discussions as $discussion)
         <div class="card mb-3">
             <div class="card-header">
+                {{ $discussion->discusion_views->count() }} Views
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
                 <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
 

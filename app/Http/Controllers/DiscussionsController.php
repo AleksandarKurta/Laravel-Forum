@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Session;
 use Auth;
 use Notification;
+use DB;
 use App\User;
 use App\Reply;
 use App\Discussion;
+use App\DiscussionView;
 use Illuminate\Http\Request;
 
 class DiscussionsController extends Controller
@@ -68,8 +70,12 @@ class DiscussionsController extends Controller
     {
         $discussion = Discussion::where('slug', $slug)->first();
 
+        DiscussionView::createViewLog($discussion);
+
+        $views = $discussion->discusion_views()->count();
+
         $bestAnswer = $discussion->replies()->where('best_answer', 1)->first();
-        return view('discussions.show', compact('discussion', 'bestAnswer'));
+        return view('discussions.show', compact('discussion', 'bestAnswer', 'views'));
     }
 
     /**

@@ -25,7 +25,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -45,9 +45,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Channels
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                                 @foreach($channels as $channel)
-                                    <a href="{{ route('channel', ['slug' => $channel->slug]) }}" class="dropdown-item">{{ $channel->title }}</a>
+                                    <a href="{{ route('channel', ['slug' => $channel->slug]) }}" class="dropdown-item text-light">{{ $channel->title }}</a>
                                 @endforeach
                             </div>
                         </li>
@@ -98,13 +98,13 @@
                         <div class="card-body">
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <a href="?filter=me">My discussions</a>
+                                    <a href="/?filter=me">My discussions</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="?filter=solved">Closed discussions</a>
+                                    <a href="/?filter=solved">Closed discussions</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="?filter=unsolved">Open discussions</a>
+                                    <a href="/?filter=unsolved">Open discussions</a>
                                 </li>
                             </ul>
                         </div>

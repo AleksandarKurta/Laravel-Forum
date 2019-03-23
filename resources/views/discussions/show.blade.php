@@ -5,7 +5,7 @@
             <div class="card-header">
                 <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
                 <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> ({{ $discussion->user->profile->points }}) points</span>
-
+                <span> {{ $views }} Views</span>
                 @if($discussion->hasBestAnswer())
                     <span class="btn btn-danger btn-sm float-right ml-1">closed</span>
                 @else 
@@ -51,7 +51,7 @@
             @endif
 
             <div class="card-footer">
-                {{ $discussion->replies->count() }} Replies
+                {{ $discussion->replies->count() }} Replies 
             </div>
         </div>
 

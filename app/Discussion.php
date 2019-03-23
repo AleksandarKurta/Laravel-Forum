@@ -49,4 +49,8 @@ class Discussion extends Model
         }
         return $result;
     }
+
+    public function discusion_views(){
+        return $this->hasMany('App\DiscussionView');
+    }
 }
