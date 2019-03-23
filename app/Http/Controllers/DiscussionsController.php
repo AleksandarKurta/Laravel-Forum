@@ -10,6 +10,8 @@ use App\User;
 use App\Reply;
 use App\Discussion;
 use App\DiscussionView;
+use App\Tag;
+use App\Channel;
 use Illuminate\Http\Request;
 
 class DiscussionsController extends Controller
@@ -31,7 +33,13 @@ class DiscussionsController extends Controller
      */
     public function create()
     {
-        return view('discussions.discuss');
+        $tags = Tag::all();
+        $channels = Channel::all();
+        if($channels->count() == 0){
+            Session::flash('info', 'You must have some channels created before creating the disucssion.');
+            return back();
+        }
+        return view('discussions.discuss', compact('tags'));
     }
 
     /**
@@ -42,17 +50,18 @@ class DiscussionsController extends Controller
      */
     public function store()
     {
-
         $attributes = request()->validate([
             'title' => 'required',
             'content' => 'required',
-            'channel_id' => 'required' 
+            'channel_id' => 'required',
+            'tags' => 'required' 
         ]);
 
         $attributes['user_id'] = Auth::id();
         $attributes['slug'] = str_slug($attributes['title']);
 
         $discussion = Discussion::create($attributes);
+        $discussion->tags()->attach($attributes['tags']);
 
         Session::flash('success', 'Discussion created successfully.');
 

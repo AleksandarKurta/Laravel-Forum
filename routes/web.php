@@ -47,5 +47,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/discussion/unwatch/{id}', 'WatchersController@unwatch')->name('discussion.unwatch');
 
     Route::get('/discussion/best/answer/{reply}', 'RepliesController@bestAnswer')->name('discussion.best.answer');
+
+    Route::resource('tags', 'TagsController');
 });
 

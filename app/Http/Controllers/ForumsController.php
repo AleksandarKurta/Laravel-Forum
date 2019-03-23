@@ -14,6 +14,11 @@ class ForumsController extends Controller
         switch(request()->filter){
             case "me":
                 $discussions = Discussion::where('user_id', Auth::id())->paginate(3);
+                $discussions->withPath('/?filter=me');
+                break;
+            case "mostviewed":
+                $discussions = Discussion::withCount('discusion_views')->orderBy('discusion_views_count', 'desc')->paginate(3);
+                $discussions->withPath('/?filter=mostviewed');
                 break;
             case "solved":
                 $solved = [];
@@ -24,7 +29,7 @@ class ForumsController extends Controller
                 endforeach;
 
                 $discussions = new Paginator($solved, 3);
-                $discussions->withPath('?filter=solved');
+                $discussions->withPath('/?filter=solved');
 
                 break;
             case "unsolved":
@@ -36,7 +41,7 @@ class ForumsController extends Controller
                 endforeach;
 
                 $discussions = new Paginator($unsolved, 3);
-                $discussions->withPath('?filter=unsolved');
+                $discussions->withPath('/?filter=unsolved');
 
                 break;
             default:

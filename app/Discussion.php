@@ -25,6 +25,10 @@ class Discussion extends Model
         return $this->hasMany('App\Watcher');
     }
 
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
+
     public function isBeingWatchedByAuthUser(){
         $userId = Auth::id();
 

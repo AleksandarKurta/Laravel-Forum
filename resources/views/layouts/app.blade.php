@@ -41,6 +41,22 @@
                             <a class="nav-link" href="{{ route('forum') }}">Home</a>
                         </li>
 
+                        @if(Auth::check())
+                            @if(Auth::user()->admin)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                        <a href="{{ route('channels.index') }}" class="dropdown-item text-light">Channels List</a>
+                                        <a href="{{ route('channels.create') }}" class="dropdown-item text-light">Create Channel</a>
+                                        <a href="{{ route('tags.index') }}" class="dropdown-item text-light">Tags List</a>
+                                        <a href="{{ route('tags.create') }}" class="dropdown-item text-light">Create Tag</a>
+                                    </div>
+                                </li>
+                            @endif
+                        @endif
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Channels
@@ -51,6 +67,19 @@
                                 @endforeach
                             </div>
                         </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Search filters
+                            </a>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                <a href="/?filter=me" class="dropdown-item text-light">My discussions</a>
+                                <a href="/?filter=mostviewed" class="dropdown-item text-light">Most viewed</a>
+                                <a href="/?filter=solved" class="dropdown-item text-light">Closed discussions</a>
+                                <a href="/?filter=unsolved" class="dropdown-item text-light">Open discussions</a>
+                            </div>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->

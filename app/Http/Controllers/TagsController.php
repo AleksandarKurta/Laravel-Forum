@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Session;
-use App\Channel;
+use App\Tag;
 use Illuminate\Http\Request;
 
-class ChannelsController extends Controller
+class TagsController extends Controller
 {
-
     public function __construct(){
         $this->middleware('admin');
     }
@@ -19,9 +18,8 @@ class ChannelsController extends Controller
      */
     public function index()
     {
-
-        $channels = Channel::paginate(5);
-        return view('admin.channels.index', compact('channels'));
+        $tags = Tag::paginate(5);
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -31,7 +29,7 @@ class ChannelsController extends Controller
      */
     public function create()
     {
-        return view('admin.channels.create');
+        return view('admin.tags.create');
     }
 
     /**
@@ -40,19 +38,17 @@ class ChannelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Tag $tag)
     {
-        $attributes = request()->validate([
-            'title' => 'required'
+        $attribute = request()->validate([
+            'name' => 'required'
         ]);
 
-        $attributes['slug'] = str_slug($attributes['title']);
+        $tag->create($attribute);
 
-        Channel::create($attributes);
+        Session::flash('success', 'Tag created successfully.');
 
-        Session::flash('success', 'Channel created successfully.');
-
-        return redirect()->route('channels.index');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -72,9 +68,9 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Channel $channel)
+    public function edit(Tag $tag)
     {
-        return view('admin.channels.edit', compact('channel'));
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -84,19 +80,17 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Channel $channel)
+    public function update(Tag $tag)
     {
-        $attributes = request()->validate([
-            'title' => 'required'
+        $attribute = request()->validate([
+            'name' => 'required'
         ]);
 
-        $attributes['slug'] = str_slug($attributes['title']);
-        
-        $channel->update($attributes);
+        $tag->update($attribute);
 
-        Session::flash('success', 'Channel updated successfully.');
+        Session::flash('success', 'Tag updated successfully.');
 
-        return redirect()->route('channels.index');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -105,11 +99,12 @@ class ChannelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Channel $channel)
+    public function destroy(Tag $tag)
     {
-        $channel->delete();
+        $tag->delete();
+        $tag->discussions()->detach();
 
-        Session::flash('success', 'Channel deleted successfully.');
+        Session::flash('success', 'Tag deleted successfully.');
 
         return back();
     }

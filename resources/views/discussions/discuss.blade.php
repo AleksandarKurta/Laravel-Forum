@@ -24,6 +24,18 @@
                         @endforeach
                     </select>
                 </div>
+                @if($tags->count() > 0)
+                <div class="form-group">
+                    <label for="tags">Select Tags</label>
+                        @foreach($tags as $tag)
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}">{{ $tag->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                </div>
+                @endif
                 <div class="form-group">
                     <label for="content">Content</label>
                     <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ old('content') }}</textarea>
