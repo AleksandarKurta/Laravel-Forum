@@ -39,7 +39,7 @@
         @endforeach
     @else   
         <div class="text-center">
-            <h3>No results fount matching your criteria!</h3>
+            <h3>No results fount matching your criteria</h3>
         </div>
     @endif
 
