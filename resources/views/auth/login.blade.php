@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="mt-5 mb-5">
         <div class="text-center m-3">
-            <a href="{{ route('social.auth', ['provider' => 'github']) }}" class="btn btn-dark">Login with Github</a>
+            <a href="{{ route('social.auth', ['provider' => 'github']) }}" class="btn btn-secondary col-md-3">Login with Github <i class="fab fa-github"></i></a>
         </div>
         <div class="text-center m-3">
-            <a href="{{ route('social.auth', ['provider' => 'google']) }}" class="btn btn-dark">Login with Google</a>
+            <a href="{{ route('social.auth', ['provider' => 'google']) }}" class="btn btn-light col-md-3">Login with Google <i class="fab fa-google"></i></a>
         </div>
 
-        <div class="card">
-            <div class="card-header">{{ __('Login') }}</div>
+        <div class="card bg-dark text-white">
+            <div class="card-header text-center color-yellow">
+                <h4>{{ __('Login') }}</h4>
+            </div>
 
             <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
@@ -57,7 +60,7 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary col-md-3">
                                 {{ __('Login') }}
                             </button>
 
@@ -71,4 +74,5 @@
                 </form>
             </div>
         </div>
+    </div>
 @endsection

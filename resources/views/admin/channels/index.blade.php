@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header text-center">
-            Channels List
+    <div class="card text-white bg-dark">
+        <div class="card-header text-center color-yellow">
+            <h5>Channels List</h5>
         </div>
 
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-dark">
                 <thead>
                     <th>Channel Title</th>
                     <th>Edit</th>
@@ -40,13 +40,7 @@
         </div>
 
         <div class="card-footer">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">«</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
+            {{ $channels->links() }}
         </div>
     </div>
 @endsection

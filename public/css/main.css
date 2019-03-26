@@ -1,0 +1,83 @@
+#app {
+    min-height: 100vh;
+}
+
+.bg-black {
+    background-color: black !important;
+}
+
+.bgr-yellow {
+    background-color: #ffcc00;
+}
+
+.bg-yellow {
+    color: #ffcc00 !important;
+}
+
+.color-yellow {
+    color: #ffcc00 !important;
+}
+
+.bg-light-gray {
+    background-color: #4f4f4f;
+}
+
+.bg-dark-gray {
+    background-color: #494c4f;
+}
+
+.forum-discussion {
+    border-bottom: 1px solid black;
+}
+
+.title {
+    color: #ffcc00;
+}
+
+.title:hover {
+    color: #ffcc00;
+}
+
+.stats-search {
+    border-bottom: 1px solid black;
+}
+
+.span-admin {
+    font-size: 18px;
+}
+
+.pts {
+    font-size: 14px;
+}
+
+.font-18 {
+    font-size: 16px;
+}
+
+.navbar-custom {
+    background-color: #ffcc00;
+}
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+.nav-link {
+    font-size: 16px;
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #ffcc00;
+}
+
+.navbar-custom .dropdown-menu a:hover{
+    background-color: #ffd632;
+}
+
+.bgr-img {
+    border-bottom: 3px solid #ffd632;
+}
+
+
+
+

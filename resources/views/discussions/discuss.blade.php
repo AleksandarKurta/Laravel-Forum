@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-dark text-center text-white">
+    <div class="card bg-dark text-white">
+        <div class="card-header text-center color-yellow">
             <h5>Create Discussion</h5>    
         </div>    
 
@@ -41,7 +41,7 @@
                     <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ old('content') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-dark">Create discussion</button>
+                    <button type="submit" class="btn btn-secondary">Create discussion</button>
                 </div>
             </form>
         </div>

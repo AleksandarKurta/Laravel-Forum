@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="card">
-            <div class="card-header text-center">
+        <div class="card text-white bg-dark">
+            <div class="card-header text-center color-yellow">
                 Tags List
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-dark">
                     <thead>
                         <th>Tag Name</th>
                         <th>Edit</th>

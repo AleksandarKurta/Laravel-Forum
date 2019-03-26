@@ -3,47 +3,49 @@
 @section('content')
     @if($discussions->count() > 0)
         @foreach ($discussions as $discussion)
-            <div class="card mb-3">
-                <div class="card-header">
-                    {{ $discussion->discusion_views->count() }} Views
-                    <img src="{{ asset($discussion->user->profile->avatar) }}" alt="avatar" width="80px">
-                    <span>{{ $discussion->user->name }} <b>{{ $discussion->created_at->diffForHumans() }}</b> </span>
-
-                    @if($discussion->hasBestAnswer())
-                        <span class="btn btn-danger btn-sm float-right">closed</span>
-                    @else 
-                        <span class="btn btn-success btn-sm float-right">open</span>
+            <div class="row pt-4 pb-2 forum-discussion">
+                <div class="col-md-1 text-center">
+                    views
+                    <p>{{ $discussion->discusion_views->count() }}</p>
+                </div>
+                <div class="col-md-1 text-center">
+                    replies
+                    <p>{{ $discussion->replies->count() }}</p>
+                </div>
+                <div class="col-md-8">
+                    <h5><a href="{{ route('discussion', ['slug' => $discussion->slug]) }}" class="title">{{ str_limit($discussion->title, 80) }}</a></h5>
+                    Started <span class="color-yellow">{{ $discussion->user->name }}</span> {{ $discussion->created_at->diffForHumans() }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @if($discussion->tags->count() > 0)
+                        <span class="text-info">#Tags </span>
+                    @elseif($discussion->tags->count() == 1)
+                        <span class="text-info">#Tag </span>
                     @endif
-
-                    @if($discussion->user_id == Auth::id())
-                        @if(!$discussion->hasBestAnswer())
-                            <a href="{{ route('discussion.edit', ['discussion' => $discussion]) }}" class="btn btn-primary btn-sm float-right mr-1">Edit</a>
+                    @foreach($discussion->tags as $tag)
+                        <a href="" class="btn btn-info btn-sm mr-1">{{ $tag->name }}</a>
+                    @endforeach
+                </div>
+                <div class="col-md-2 font-18">
+                        <div class="text-center">
+                        @if($discussion->hasBestAnswer())
+                            Status - <span class="btn btn-danger btn-sm">Closed</span>
+                        @else 
+                            Status - <span class="btn btn-success btn-sm">Open</span>
                         @endif
-                    @endif
-
-                    <a href="{{ route('discussion', ['slug' => $discussion->slug]) }}" class="btn btn-secondary btn-sm float-right mr-1">View</a>
-                </div>
-
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>{{ $discussion->title }}</h4>
-                        <p>{{ str_limit($discussion->content, 50) }}</p>
+                        </div>
+                    <div class="text-center pt-1">
+                        <span>Channel - </span>
+                        <span class="color-yellow"> {{ $discussion->channel->title }}</span>
                     </div>
-                </div>
-
-                <div class="card-footer">
-                    {{ $discussion->replies->count() }} Replies
-                    <a href="{{ route('channel', ['slug' => $discussion->channel->slug]) }}" class="btn btn-secondary btn-sm float-right">{{ $discussion->channel->title }}</a>
                 </div>
             </div>
         @endforeach
-    @else 
-        <div class="text-center">
-            <h3>No discussions found matching you criteria</h3>
+    @else   
+        <div class="text-center text-white">
+            <h3>No results fount matching your criteria!</h3>
         </div>
     @endif
 
-    <div class="text-center">
+    <div class="text-center pt-3">
         {{ $discussions->links() }}
     </div>
 @endsection

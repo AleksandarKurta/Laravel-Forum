@@ -13,11 +13,11 @@ class ForumsController extends Controller
     public function forum(){
         switch(request()->filter){
             case "me":
-                $discussions = Discussion::where('user_id', Auth::id())->paginate(3);
+                $discussions = Discussion::where('user_id', Auth::id())->paginate(10);
                 $discussions->withPath('/?filter=me');
                 break;
             case "mostviewed":
-                $discussions = Discussion::withCount('discusion_views')->orderBy('discusion_views_count', 'desc')->paginate(3);
+                $discussions = Discussion::withCount('discusion_views')->orderBy('discusion_views_count', 'desc')->paginate(10);
                 $discussions->withPath('/?filter=mostviewed');
                 break;
             case "solved":
@@ -28,7 +28,7 @@ class ForumsController extends Controller
                     }
                 endforeach;
 
-                $discussions = new Paginator($solved, 3);
+                $discussions = new Paginator($solved, 10);
                 $discussions->withPath('/?filter=solved');
 
                 break;
@@ -40,12 +40,12 @@ class ForumsController extends Controller
                     }
                 endforeach;
 
-                $discussions = new Paginator($unsolved, 3);
+                $discussions = new Paginator($unsolved, 10);
                 $discussions->withPath('/?filter=unsolved');
 
                 break;
             default:
-                $discussions = Discussion::orderBy('created_at', 'desc')->paginate(3);
+                $discussions = Discussion::orderBy('created_at', 'desc')->paginate(10);
         }
 
         return view('forum', compact('discussions'));

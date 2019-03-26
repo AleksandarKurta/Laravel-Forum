@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-dark text-center text-white">
+    <div class="card text-white bg-dark">
+        <div class="card-header text-center color-yellow">
             <h5>Edit Tag</h5>    
         </div>    
 
@@ -18,7 +18,7 @@
                     <input type="text" name="name" id="name" value="{{ $tag->name }}" class="form-control">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-dark">Update tag</button>
+                    <button type="submit" class="btn btn-secondary">Update tag</button>
                 </div>
             </form>
         </div>

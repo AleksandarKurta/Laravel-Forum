@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-dark text-center text-white">
+    <div class="card text-white bg-dark">
+        <div class="card-header text-center color-yellow">
             <h5>Create Tag</h5>    
         </div>    
 

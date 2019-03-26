@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-dark text-center text-white">
+    <div class="card bg-dark text-white mt-5">
+        <div class="card-header text-center color-yellow">
             <h5>Edit Discussion</h5>    
         </div>    
 
@@ -17,7 +17,7 @@
                     <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ $discussion->content }}</textarea>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-dark">Edit discussion</button>
+                    <button type="submit" class="btn btn-secondary col-md-3">Edit discussion</button>
                 </div>
             </form>
         </div>
